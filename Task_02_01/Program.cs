@@ -151,3 +151,223 @@ public class Program
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+namespace consoleProject
+{
+    /// <summary>
+    ///  класс Card описывающий банковскую карту как сущность 
+    ///  в приложении c данными:
+    ///  Номер карты, Фио клиента, Срок действия, Код безопасности, Дебетовая/кредитная
+    /// </summary>
+    internal class Card
+    {
+        #region поля
+        private ulong number;
+        private string clientFIO;
+        private DateTime validity;
+        private int secureCode;
+        private string type;
+        #endregion
+
+        #region свойства
+        //открытое свойство номера, связанное с полем номера и выполняющее предварительную проверка на количество цифр меньше 20 или больше
+        public ulong Number
+        {
+            get { return number; } //аксессор для чтения значения поля
+            set                  //аксессор для записи значения в поле
+            {
+                if (value.ToString().Length == 20) //если приходящее значение == 20
+                    number = value;   //то в поле записывается приходящее значение
+                else Console.WriteLine("Warning! number not equal to 20"); //иначе выводится сообщение о некорректных вх данных и запись в поле не происходит
+            }
+
+        }
+        //открытое свойство ФИО, связанное с полем ФИО и выполняющее предварительную проверка на попытку записать пустое имя
+        public string ClientFIO
+        {
+            get { return clientFIO; } //аксессор для чтения значения поля
+            set                  //аксессор для записи значения в поле
+            {
+                if (value != null) //если приходящее значение не null
+                    clientFIO = value;   //то в поле записывается приходящее значение
+                else Console.WriteLine("Warning! clientFIO is empty"); //иначе выводится сообщение о некорректных вх данных и запись в поле не происходит
+            }
+        }
+
+        //открытое свойство кода, связанное с полем кода и выполняющее предварительную проверка на количество цифр меньше 3 или больше
+        public DateTime Validity
+        {
+            get { return validity; } //аксессор для чтения значения поля
+            set                  //аксессор для записи значения в поле
+            {
+                DateTime date1 = new DateTime(2022, 1, 1);
+                DateTime date2 = new DateTime(2026, 1, 1);
+                if (date1 <= value && date2 >= value) //
+                    validity = value;   //то в поле записывается приходящее значение
+                else Console.WriteLine("Warning! validity does not match the date"); //иначе выводится сообщение о некорректных вх данных и запись в поле не происходит
+            }
+
+        }
+
+        //открытое свойство кода, связанное с полем кода и выполняющее предварительную проверка на количество цифр меньше 3 или больше
+        public int SecureCode
+        {
+            get { return secureCode; } //аксессор для чтения значения поля
+            set                  //аксессор для записи значения в поле
+            {
+                if (value.ToString().Length == 3) //если приходящее значение == 20
+                    secureCode = value;   //то в поле записывается приходящее значение
+                else Console.WriteLine("Warning! secureCode not equal to 3"); //иначе выводится сообщение о некорректных вх данных и запись в поле не происходит
+            }
+
+        }
+
+        //открытое свойство ФИО, связанное с полем ФИО и выполняющее предварительную проверка на попытку записать пустое имя
+        public string Type
+        {
+            get { return type; } //аксессор для чтения значения поля
+            set                  //аксессор для записи значения в поле
+            {
+                if (value != null) //если приходящее значение не null
+                    type = value;   //то в поле записывается приходящее значение
+                else Console.WriteLine("Warning! Type is empty"); //иначе выводится сообщение о некорректных вх данных и запись в поле не происходит
+            }
+        }
+
+        #endregion
+
+        #region static
+
+        #endregion
+
+        #region конструкторы
+        //значения по умолчания
+        public Card() {}
+
+        /// <summary>
+        /// объект с номером и фамилией
+        /// </summary>
+        /// <param name="number">номер</param>
+        /// <param name="clientFIO">фамилия</param>
+        public Card(ulong number, string clientFIO)
+        {
+            Number = number;
+            ClientFIO = clientFIO;
+        }
+
+        /// <summary>
+        /// объект с номером фамилией сроком действия
+        /// </summary>
+        /// <param name="number">номер</param>
+        /// <param name="clientFIO">фамилия</param>
+        /// <param name="validity">срок</param>
+        public Card(ulong number, string clientFIO, DateTime validity)
+        {
+            Number = number;
+            ClientFIO = clientFIO;
+            Validity = validity;
+        }
+        /// <summary>
+        /// объект с номером фамилией сроком действия кодом безопасности
+        /// </summary>
+        /// <param name="number">номер</param>
+        /// <param name="clientFIO">фамилия</param>
+        /// <param name="validity">срок</param>
+        /// <param name="secureCode">код безопасности</param>
+        public Card(ulong number, string clientFIO, DateTime validity, int secureCode)
+        {
+            Number = number;
+            ClientFIO = clientFIO;
+            Validity = validity;
+            SecureCode = secureCode;
+        }
+
+        /// <summary>
+        /// объект с номером фамилией сроком действия кодом безопасности и типом
+        /// </summary>
+        /// <param name="number">номер</param>
+        /// <param name="clientFIO">фамилия</param>
+        /// <param name="validity">срок</param>
+        /// <param name="secureCode">код безопасности</param>
+        /// <param name="type">тип</param>
+        public Card(ulong number, string clientFIO, DateTime validity, int secureCode, string type)
+        {
+            Number = number;
+            ClientFIO = clientFIO;
+            Validity = validity;
+            SecureCode = secureCode;
+            Type = type;
+        }
+        #endregion
+
+        #region методы
+        /// <summary>
+        /// возврат текущей информации по объекту
+        /// </summary>
+        /// <returns>строка с информацией</returns>
+        public void PrintInfo()
+        {
+            Console.WriteLine("Информация о карте:\n" + $"Номер: {Number}\n" +
+                $"ФИО клиента: {ClientFIO}\n" + $"Срок действия: {Validity}\n" +
+                $"Код безопасности: {SecureCode} \n" + $"Тип: {Type}\n");
+            Console.WriteLine();
+        }
+        #endregion
+    }
+}
+Создать статические поля для этой программы
+Назначение статического поля/полей
+Подсчитывает количество всех банковских карт
+Подсчитывает количество карт, срок действия которых истекает в этом году
+
+
+
+
