@@ -594,3 +594,122 @@ namespace consoleProject
 
 
 
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+// Перечисление для типа вопроса
+public enum QuestionDifficulty
+{
+    Easy,
+    Hard
+}
+
+// Класс вопроса
+public class Question
+{
+    public string Text { get; set; }
+    public List<string> Answers { get; set; }
+    public int CorrectAnswerIndex { get; set; }
+    public QuestionDifficulty Difficulty { get; set; }
+
+    public Question(string text, List<string> answers, int correctAnswerIndex, QuestionDifficulty difficulty)
+    {
+        Text = text;
+        Answers = answers;
+        CorrectAnswerIndex = correctAnswerIndex;
+        Difficulty = difficulty;
+    }
+}
+
+// Статический класс викторины
+public static class Quiz
+{
+    public static List<Question> Questions { get; private set; } = new List<Question>();
+
+    // Метод для генерации вопросов (заполнения списка)
+    public static void GenerateQuestions()
+    {
+        // Примеры вопросов (добавьте свои)
+        Questions.Add(new Question("2 + 2 = ?", new List<string> { "3", "4", "5", "6" }, 1, QuestionDifficulty.Easy));
+        Questions.Add(new Question("Столица Франции?", new List<string> { "Берлин", "Рим", "Париж", "Лондон" }, 2, QuestionDifficulty.Easy));
+        Questions.Add(new Question("Что такое фотосинтез?", new List<string> { "...", "...", "..." }, 0, QuestionDifficulty.Hard));
+        Questions.Add(new Question("Формула площади круга?", new List<string> { "...", "...", "..." }, 1, QuestionDifficulty.Hard));
+         Questions.Add(new Question("Сколько океанов на Земле?", new List<string> { "3", "4", "5", "7" }, 2, QuestionDifficulty.Easy));
+        Questions.Add(new Question("В каком году началась Вторая мировая война?", new List<string> { "1914", "1939", "1945", "1941" }, 1, QuestionDifficulty.Hard));
+
+    }
+
+
+    // Добавление нового вопроса
+    public static void AddQuestion(Question question)
+    {
+        Questions.Add(question);
+    }
+
+    // Изменение правильного ответа
+    public static void ChangeCorrectAnswer(int questionIndex, int newCorrectAnswerIndex)
+    {
+        if (questionIndex >= 0 && questionIndex < Questions.Count)
+        {
+            Questions[questionIndex].CorrectAnswerIndex = newCorrectAnswerIndex;
+        }
+        else
+        {
+            Console.WriteLine("Ошибка: индекс вопроса некорректен.");
+        }
+    }
+
+    // Запуск викторины
+    public static void StartQuiz()
+    {
+        Random random = new Random();
+        List<Question> quizQuestions = Questions.Where(q => q.Difficulty == QuestionDifficulty.Hard).OrderBy(x => random.Next()).Take(3).ToList();
+        quizQuestions.AddRange(Questions.Where(q => q.Difficulty == QuestionDifficulty.Easy).OrderBy(x => random.Next()).Take(7).ToList());
+        quizQuestions = quizQuestions.OrderBy(x => random.Next()).ToList();
+
+
+        int correctAnswers = 0;
+        int score = 0;
+
+
+        foreach (Question question in quizQuestions)
+        {
+            Console.ForegroundColor = question.Difficulty == QuestionDifficulty.Easy ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine(question.Text);
+            Console.ResetColor();
+
+            for (int i = 0; i < question.Answers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {question.Answers[i]}");
+            }
+
+            Console.Write("Ваш ответ: ");
+            if (int.TryParse(Console.ReadLine(), out int userAnswer) && userAnswer > 0 && userAnswer <= question.Answers.Count)
+            {
+                if (userAnswer - 1 == question.CorrectAnswerIndex)
+                {
+                    correctAnswers++;
+                    score += question.Difficulty == QuestionDifficulty.Easy ? 1 : 5;
+                    Console.WriteLine("Верно!");
+                }
+                else
+                {
+                    Console.WriteLine($"Неверно. Правильный ответ: {question.Answers[question.CorrectAnswerIndex]}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод.");
+            }
+    
+
+
+
+
+
