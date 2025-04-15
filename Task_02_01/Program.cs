@@ -782,4 +782,65 @@ public static class Quiz
 
 
 
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  using System;
+
+class Program
+{
+    static void Main()
+    {
+
+        Quiz.LoadQuestions(); // Загружаем вопросы при запуске
+
+        if (Quiz.Questions.Count == 0) // если файл не найден или пустой, генерируем вопросы
+        {
+            Quiz.GenerateQuestions();
+        }
+
+        // ... (меню и вызов методов Quiz)
+
+        Console.WriteLine("1. Начать викторину");
+        Console.WriteLine("2. Добавить вопрос");
+        Console.WriteLine("3. Изменить ответ");
+
+
+        string choice = Console.ReadLine();
+
+
+
+        if (choice == "1")
+        {
+            Quiz.StartQuiz();
+        }
+        // ... (обработка других пунктов меню)
+
+
+        Console.ReadKey();
+
+
+    }
+}          
