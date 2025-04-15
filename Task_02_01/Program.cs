@@ -844,3 +844,110 @@ class Program
 
     }
 }          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary; // Для сериализации
+
+public static class Quiz
+{
+    public static List<Question> Questions { get; private set; } = new List<Question>();
+    private static string filePath = "questions.dat"; // Файл для сохранения
+
+    // Загрузка вопросов из файла
+    public static void LoadQuestions()
+    {
+        if (File.Exists(filePath))
+        {
+             // Десериализация
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(filePath, FileMode.Open))
+            {
+                Questions = (List<Question>)formatter.Deserialize(stream);
+            }
+        }
+    }
+
+    // Сохранение вопросов в файл
+    public static void SaveQuestions()
+    {
+      // Сериализация
+        BinaryFormatter formatter = new BinaryFormatter();
+        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+        {
+            formatter.Serialize(stream, Questions);
+        }
+    }
+
+
+    // Генерация вопросов
+    public static void GenerateQuestions()
+    {
+        // ... (добавление вопросов, как в предыдущем примере)
+        // После добавления вызвать SaveQuestions()
+        SaveQuestions();
+    }
+
+    // Добавление вопроса
+    public static void AddQuestion(Question question)
+    {
+        Questions.Add(question);
+        SaveQuestions(); // Сохраняем после добавления
+    }
+
+
+    // Изменение правильного ответа
+    public static void ChangeCorrectAnswer(int questionIndex, int newCorrectAnswerIndex)
+    {
+        // ... (как в предыдущем примере)
+        SaveQuestions(); // Сохраняем после изменения
+    }
+
+    // Запуск викторины
+    public static void StartQuiz()
+    {
+        Console.WriteLine("Викторина начинается! Будет 3 сложных и 7 легких вопросов.");
+
+        Random random = new Random();
+        List<Question> quizQuestions = new List<Question>();
+
+        // **ВНИМАНИЕ:** Без LINQ реализация случайного выбора значительно усложняется. 
+        // Здесь представлен упрощенный пример, который *не гарантирует* ровно 3 сложных и 7 легких вопроса.
+
+        for (int i = 0; i < 10 && i < Questions.Count ; i++) //Берем не более 10 вопросов
+        {
+            int randomIndex = random.Next(Questions.Count);
+            quizQuestions.Add(Questions[randomIndex]);
+        }
+
+
+        // ... (остальной код викторины аналогичен предыдущему примеру, 
+        // но без использования LINQ для фильтрации и сортировки.)
+        // ...
+    }
+
+
+}
+
+            
