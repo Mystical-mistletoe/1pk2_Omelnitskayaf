@@ -951,3 +951,65 @@ public static class Quiz
 }
 
             
+м
+
+LoginWindow.xaml.cs (Окно 02: Логика)
+// Windows/LoginWindow.xaml.cs
+using System.Windows;
+using SimpleBookingApp.Models;
+
+namespace SimpleBookingApp.Windows
+{
+    public partial class LoginWindow : Window
+    {
+        public LoginWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void BtnLoginUser_Click(object sender, RoutedEventArgs e)
+        {
+            string login = txtLogin.Text;
+            string password = pbPassword.Password;
+
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Пожалуйста, введите логин и пароль.", "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            User authenticatedUser = App.UserManager.AuthenticateUser(login, password);
+
+            if (authenticatedUser != null)
+            {
+                App.CurrentUser = authenticatedUser; // Сохраняем текущего пользователя
+
+                if (authenticatedUser.Role == UserRole.User)
+                {
+                    UserDashboardWindow userDashboard = new UserDashboardWindow(); // Окно 1
+                    userDashboard.Show();
+                }
+                else if (authenticatedUser.Role == UserRole.Manager)
+                {
+                    ManagerDashboardWindow managerDashboard = new ManagerDashboardWindow(); // Окно 2
+                    managerDashboard.Show();
+                }
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Неверный логин или пароль.", "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnBackToMain_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+    }
+}
+
+
+UserDashboardWindow.xaml (Окно 1: Панель пользователя)
