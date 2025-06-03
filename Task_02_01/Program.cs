@@ -1,3 +1,62 @@
+<!-- Windows/MainWindow.xaml -->
+<Window x:Class="SimpleBookingApp.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:SimpleBookingApp.Windows"
+        mc:Ignorable="d"
+        Title="Добро пожаловать!" Height="250" Width="300"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="btnRegister" Content="Зарегистрироваться"
+                    Margin="10" Padding="10 5" Click="BtnRegister_Click"
+                    FontSize="16"/>
+            <Button x:Name="btnLogin" Content="Войти"
+                    Margin="10" Padding="10 5" Click="BtnLogin_Click"
+                    FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
+
+
+
+// Windows/MainWindow.xaml.cs
+using System.Windows;
+
+namespace SimpleBookingApp.Windows
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void BtnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            RegistrationWindow registrationWindow = new RegistrationWindow(); // Окно 01
+            registrationWindow.Show();
+            this.Close(); // Закрываем текущее окно
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow(); // Окно 02
+            loginWindow.Show();
+            this.Close(); // Закрываем текущее окно
+        }
+    }
+}
+
+
+
+
+
+
+
 <!-- Windows/LoginWindow.xaml -->
 <Window x:Class="SimpleBookingApp.Windows.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
